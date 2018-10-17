@@ -3,24 +3,14 @@ from setuptools import setup
 __project__ = 'mcpi'
 __desc__ = 'Python library for the Minecraft Pi edition and RaspberryJuice API'
 __version__ = '1.1.0'
-__author__ = "Martin O'Hanlon"
-__author_email__ = 'martin@ohanlonweb.com'
+__author__ = "Martin O'Hanlon, rpahu32323"
+__author_email__ = 'martin@ohanlonweb.com, rpahu32323@gmail.com'
 __license__ = 'MIT'
-__url__ = 'https://github.com/martinohanlon/mcpi'
+__url__ = 'https://github.com/rpahu32323/mcpi'
 
 __classifiers__ = [
-    "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Education",
-    "Intended Audience :: Developers",
-    "Topic :: Education",
-    "Topic :: Games/Entertainment",
+    "Development Status :: 1 - Planning",
     "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 2",
-    "Programming Language :: Python :: 2.7",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.3",
-    "Programming Language :: Python :: 3.4",
-    "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
 ]
 
