@@ -37,48 +37,48 @@ class CmdPositioner:
         self.conn = connection
         self.pkg = packagePrefix
 
-    def getPos(self, id):
+    def getPos(self, entityId):
         """Get entity position (entityId:int) => Vec3"""
-        s = self.conn.sendReceive(self.pkg + b".getPos", id)
+        s = self.conn.sendReceive(self.pkg + b".getPos", entityId)
         return Vec3(*list(map(float, s.split(","))))
 
-    def setPos(self, id, *args):
+    def setPos(self, entityId, *args):
         """Set entity position (entityId:int, x,y,z)"""
-        self.conn.send(self.pkg + b".setPos", id, args)
+        self.conn.send(self.pkg + b".setPos", entityId, args)
 
-    def getTilePos(self, id):
+    def getTilePos(self, entityId):
         """Get entity tile position (entityId:int) => Vec3"""
-        s = self.conn.sendReceive(self.pkg + b".getTile", id)
+        s = self.conn.sendReceive(self.pkg + b".getTile", entityId)
         return Vec3(*list(map(int, s.split(","))))
 
-    def setTilePos(self, id, *args):
+    def setTilePos(self, entityId, *args):
         """Set entity tile position (entityId:int) => Vec3"""
-        self.conn.send(self.pkg + b".setTile", id, intFloor(*args))
+        self.conn.send(self.pkg + b".setTile", entityId, intFloor(*args))
 
-    def setDirection(self, id, *args):
+    def setDirection(self, entityId, *args):
         """Set entity direction (entityId:int, x,y,z)"""
-        self.conn.send(self.pkg + b".setDirection", id, args)
+        self.conn.send(self.pkg + b".setDirection", entityId, args)
 
-    def getDirection(self, id):
+    def getDirection(self, entityId):
         """Get entity direction (entityId:int) => Vec3"""
-        s = self.conn.sendReceive(self.pkg + b".getDirection", id)
+        s = self.conn.sendReceive(self.pkg + b".getDirection", entityId)
         return Vec3(*map(float, s.split(",")))
 
-    def setRotation(self, id, yaw):
+    def setRotation(self, entityId, yaw):
         """Set entity rotation (entityId:int, yaw)"""
-        self.conn.send(self.pkg + b".setRotation", id, yaw)
+        self.conn.send(self.pkg + b".setRotation", entityId, yaw)
 
-    def getRotation(self, id):
+    def getRotation(self, entityId):
         """get entity rotation (entityId:int) => float"""
-        return float(self.conn.sendReceive(self.pkg + b".getRotation", id))
+        return float(self.conn.sendReceive(self.pkg + b".getRotation", entityId))
 
-    def setPitch(self, id, pitch):
+    def setPitch(self, entityId, pitch):
         """Set entity pitch (entityId:int, pitch)"""
-        self.conn.send(self.pkg + b".setPitch", id, pitch)
+        self.conn.send(self.pkg + b".setPitch", entityId, pitch)
 
-    def getPitch(self, id):
+    def getPitch(self, entityId):
         """get entity pitch (entityId:int) => float"""
-        return float(self.conn.sendReceive(self.pkg + b".getPitch", id))
+        return float(self.conn.sendReceive(self.pkg + b".getPitch", entityId))
 
     def setting(self, setting, status):
         """Set a player setting (setting, status). keys: autojump"""
@@ -89,11 +89,11 @@ class CmdEntity(CmdPositioner):
     def __init__(self, connection):
         CmdPositioner.__init__(self, connection, b"entity")
     
-    def getName(self, id):
+    def getName(self, entityId):
         """Get the list name of the player with entity id => [name:str]
         
         Also can be used to find name of entity if entity is not a player."""
-        return self.conn.sendReceive(b"entity.getName", id)
+        return self.conn.sendReceive(b"entity.getName", entityId)
 
 
 class CmdPlayer(CmdPositioner):
@@ -174,6 +174,20 @@ class Minecraft:
         self.entity = CmdEntity(connection)
         self.player = CmdPlayer(connection)
         self.events = CmdEvents(connection)
+    #
+    # added to force setting player
+    #    in my multiverse spigot server
+    #    changes in raspberryjuice won't
+    #    execute any other commands until
+    #    this is set
+    #
+    def setCurrentPlayerByName(self, name):
+        """Set the current player using a name => name"""
+        return self.conn.sendReceive(b"session.setCurretPlayerByName", name)
+    
+    def getCurrentPlayerName(self):
+        """Get the current player's name => name"""
+        return self.conn.sendReceive(b"session.getCurrentPlayerName")
 
     def getBlock(self, *args):
         """Get block (x,y,z) => id:int"""
