@@ -183,7 +183,7 @@ class Minecraft:
     #
     def setCurrentPlayerByName(self, name):
         """Set the current player using a name => name"""
-        return self.conn.sendReceive(b"session.setCurretPlayerByName", name)
+        return self.conn.sendReceive(b"session.setCurrentPlayerByName", name)
     
     def getCurrentPlayerName(self):
         """Get the current player's name => name"""
