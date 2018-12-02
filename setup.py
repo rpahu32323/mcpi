@@ -1,6 +1,6 @@
 from setuptools import setup
 
-__project__ = 'mcpi-mv'
+__project__ = 'mcpimv'
 __desc__ = 'Python library for the Minecraft Pi edition and RaspberryJuice API modified for use with multiverse'
 __version__ = '1'
 __author__ = "Martin O'Hanlon, rpahu32323"
